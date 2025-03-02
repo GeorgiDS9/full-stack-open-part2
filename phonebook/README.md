@@ -1,10 +1,10 @@
 # Helsinki Open Full Stack Course (2024-2025)
 
-## Part 2 b-e (Forms, getting data from Server and Stlying the App)
+## Part 2 b-e (Forms, getting data from Server and Styling the App)
 
 ### Intro
 
-This repository contains the exercises 2.6-2.20 (i.e. building an application in React) for **Part 2 b-e** of the Helsinki University Full Stack Open course (2024-2025). This course is designed to teach modern full-stack web development techniques and technologies. The course can be found at this [link](https://fullstackopen.com/en/about/).
+This repository contains the exercises 2.6-2.20 for **Part 2 b-e** of the Helsinki University Full Stack Open course (2024-2025). This course is designed to teach modern full-stack web development techniques and technologies. The course can be found at this [link](https://fullstackopen.com/en/about/).
 
 This part is described [here](https://fullstackopen.com/en/part2).
 
