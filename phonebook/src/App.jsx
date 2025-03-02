@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const App = () => {
   const [persons, setPersons] = useState([{ name: "Arto Hellas", id: "1" }]);
@@ -16,6 +16,7 @@ const App = () => {
       name: newName,
       id: String(persons.length + 1),
     };
+
     setPersons(persons.concat(personObject)); // Alternative that does not mutate the array: setPersons([...persons, personObject])
     setNewName("");
   };
