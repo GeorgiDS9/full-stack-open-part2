@@ -29,12 +29,16 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      // id: persons.length + 1, // JSON server will automatically generate IDs for new entries
     };
 
-    setPersons(persons.concat(personObject)); // Alternative that does not mutate the array: setPersons([...persons, personObject])
-    setNewName("");
-    setNewNumber("");
+    axios
+      .post("http://localhost:3001/persons", personObject)
+      .then((response) => {
+        setPersons(persons.concat(response.data));
+        setNewName("");
+        setNewNumber("");
+      });
   };
 
   const handleNameChange = (event) => {
