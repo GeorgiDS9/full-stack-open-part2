@@ -19,22 +19,52 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    if (persons.find((person) => person.name === newName)) {
-      alert(`${newName} is already added to the phonebook`);
+    const existingPerson = persons.find((person) => person.name === newName);
+    if (existingPerson) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const changedPerson = { ...existingPerson, number: newNumber };
+        personService
+          .update(existingPerson.id, changedPerson)
+          .then((updatedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id === existingPerson.id ? updatedPerson : person
+              )
+            );
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch(() => {
+            alert(
+              `Information of ${existingPerson.name} has already been removed from server`
+            );
+            setPersons(
+              persons.filter((person) => person.id !== existingPerson.id)
+            );
+          });
+      }
       return;
     }
 
     const personObject = {
       name: newName,
       number: newNumber,
-      // id: persons.length + 1, // JSON server will automatically generate IDs for new entries
     };
 
-    personService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-    });
+    personService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch(() => {
+        alert(`Failed to add ${newName} to the server`);
+      });
   };
 
   const deletePerson = (id) => {
