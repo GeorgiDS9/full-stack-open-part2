@@ -16,8 +16,6 @@ const App = () => {
     });
   }, []);
 
-  console.log("persons", persons);
-
   const addPerson = (event) => {
     event.preventDefault();
 
@@ -39,6 +37,15 @@ const App = () => {
         setNewName("");
         setNewNumber("");
       });
+  };
+
+  const deletePerson = (id) => {
+    const personToDelete = persons.find((person) => person.id === id);
+    if (window.confirm(`Delete ${personToDelete.name}?`)) {
+      axios.delete(`http://localhost:3001/persons/${id}`).then(() => {
+        setPersons(persons.filter((person) => person.id !== id));
+      });
+    }
   };
 
   const handleNameChange = (event) => {
@@ -66,7 +73,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={persons} newFilter={newFilter} />
+      <Persons
+        persons={persons}
+        newFilter={newFilter}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Persons = ({ persons, newFilter }) => {
+const Persons = ({ persons, newFilter, deletePerson }) => {
   return (
     <ul>
       {persons
@@ -10,6 +10,7 @@ const Persons = ({ persons, newFilter }) => {
         .map((person) => (
           <li key={person.id}>
             {person.name} {person.number}
+            <button onClick={() => deletePerson(person.id)}>delete</button>
           </li>
         ))}
     </ul>
@@ -19,6 +20,7 @@ const Persons = ({ persons, newFilter }) => {
 Persons.propTypes = {
   persons: PropTypes.array.isRequired,
   newFilter: PropTypes.string.isRequired,
+  deletePerson: PropTypes.func.isRequired,
 };
 
 Persons.displayName = "Persons";
