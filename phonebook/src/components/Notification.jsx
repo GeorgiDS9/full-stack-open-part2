@@ -6,7 +6,7 @@ const Notification = ({ message }) => {
   }
 
   const style = {
-    color: "green",
+    color: message.type === "error" ? "red" : "green",
     background: "lightgrey",
     fontSize: 20,
     borderStyle: "solid",
@@ -15,11 +15,15 @@ const Notification = ({ message }) => {
     marginBottom: 10,
   };
 
-  return <div style={style}>{message}</div>;
+  return <div style={style}>{message.message}</div>;
 };
 
 Notification.propTypes = {
-  message: PropTypes.string,
+  message: PropTypes.shape({
+    message: PropTypes.string,
+    type: PropTypes.oneOf(["success", "error"]),
+  }),
 };
 
+Notification.displayName = "Notification";
 export default Notification;

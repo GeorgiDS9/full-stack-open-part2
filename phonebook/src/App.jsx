@@ -10,7 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newFilter, setNewFilter] = useState("");
-  const [notification, setNotification] = useState("");
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((initialPersons) => {
@@ -18,8 +18,8 @@ const App = () => {
     });
   }, []);
 
-  const showNotification = (message) => {
-    setNotification(message);
+  const showNotification = (message, type = "success") => {
+    setNotification({ message, type });
     setTimeout(() => setNotification(null), 5000);
   };
 
@@ -47,8 +47,9 @@ const App = () => {
             showNotification(`Updated ${existingPerson.name}'s number`);
           })
           .catch(() => {
-            alert(
-              `Information of ${existingPerson.name} has already been removed from server`
+            showNotification(
+              `Information of ${existingPerson.name} has already been removed from server`,
+              "error"
             );
             setPersons(
               persons.filter((person) => person.id !== existingPerson.id)
@@ -72,7 +73,7 @@ const App = () => {
         showNotification(`Added ${returnedPerson.name}`);
       })
       .catch(() => {
-        alert(`Failed to add ${newName} to the server`);
+        showNotification(`Failed to add ${newName} to the server`, "error");
       });
   };
 
@@ -86,7 +87,11 @@ const App = () => {
           showNotification(`Deleted ${personToDelete.name}`);
         })
         .catch(() => {
-          alert(`Failed to delete ${personToDelete.name}`);
+          showNotification(
+            `Information of ${personToDelete.name} has already been removed from server`,
+            "error"
+          );
+          setPersons(persons.filter((p) => p.id !== id));
         });
     }
   };
