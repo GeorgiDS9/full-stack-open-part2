@@ -4,6 +4,7 @@ import axios from "axios";
 const App = () => {
   const [filter, setFilter] = useState("");
   const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {
     axios
@@ -19,6 +20,24 @@ const App = () => {
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
+    setSelectedCountry(null);
+  };
+
+  const countryInfo = (country) => {
+    return (
+      <div>
+        <h1>{country.name.common}</h1>
+        <p>Capital: {country.capital}</p>
+        <p>Area: {country.area}</p>
+        <h2>Languages</h2>
+        <ul>
+          {Object.values(country.languages).map((language) => (
+            <li key={language}>{language}</li>
+          ))}
+        </ul>
+        <img src={country.flags.png} alt="flag" />
+      </div>
+    );
   };
 
   const showCountries = () => {
@@ -34,28 +53,22 @@ const App = () => {
       return (
         <div>
           {filteredCountries.map((country) => (
-            <div key={country.name.common}>{country.name.common}</div>
+            <div
+              key={country.name.common}
+              style={{ display: "flex", gap: "10px", alignItems: "center" }}
+            >
+              <span>{country.name.common}</span>
+              <button onClick={() => setSelectedCountry(country)}>show</button>
+            </div>
           ))}
+          {selectedCountry && countryInfo(selectedCountry)}
         </div>
       );
     }
 
     // If there is only one country, then the country's information is shown
     if (filteredCountries.length === 1) {
-      return (
-        <div>
-          <h1>{filteredCountries[0].name.common}</h1>
-          <p>Capital: {filteredCountries[0].capital}</p>
-          <p>Area: {filteredCountries[0].area}</p>
-          <h2>Languages</h2>
-          <ul>
-            {Object.values(filteredCountries[0].languages).map((language) => (
-              <li key={language}>{language}</li>
-            ))}
-          </ul>
-          <img src={filteredCountries[0].flags.png} alt="flag" />
-        </div>
-      );
+      return countryInfo(filteredCountries[0]);
     }
   };
 
