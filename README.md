@@ -10,8 +10,9 @@ Course website (Part 2): [Full Stack Open](https://fullstackopen.com/en/part2)
 
 ## Repository Structure
 
-- `courseinfo-2/` - Solutions for Part 2a exercises (2.1-2.5)
-- `phonebook/` - Solutions for Part 2 b-e exercises (2.6-2.20)
+- `courseinfo-2/` - Solutions for Part 2a, exercises 2.1-2.5
+- `phonebook/` - Solutions for Part 2 b-e, exercises 2.6-2.17
+- `data-for-countries/` - Solutions for Part 2 b-e, exercises 2.18-2.19
 
 ## Getting Started
 
