@@ -25,3 +25,16 @@ cd phonebook
 npm install
 npm run dev
 ```
+
+### Production Build:
+
+```bash
+npm run build
+```
+
+This will create a production build in the `dist` directory. You can serve the production build using a static server:
+
+```bash
+npm install -g serve  # Install serve globally (one-time)
+serve -s dist        # Serve the production build
+```
