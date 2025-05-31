@@ -46,14 +46,22 @@ const App = () => {
             setNewNumber("");
             showNotification(`Updated ${existingPerson.name}'s number`);
           })
-          .catch(() => {
-            showNotification(
-              `Information of ${existingPerson.name} has already been removed from server`,
-              "error"
-            );
-            setPersons(
-              persons.filter((person) => person.id !== existingPerson.id)
-            );
+          .catch((error) => {
+            if (
+              error.response &&
+              error.response.data &&
+              error.response.data.error
+            ) {
+              showNotification(error.response.data.error, "error");
+            } else {
+              showNotification(
+                `Information of ${existingPerson.name} has already been removed from server`,
+                "error"
+              );
+              setPersons(
+                persons.filter((person) => person.id !== existingPerson.id)
+              );
+            }
           });
       }
       return;
@@ -72,8 +80,16 @@ const App = () => {
         setNewNumber("");
         showNotification(`Added ${returnedPerson.name}`);
       })
-      .catch(() => {
-        showNotification(`Failed to add ${newName} to the server`, "error");
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.error
+        ) {
+          showNotification(error.response.data.error, "error");
+        } else {
+          showNotification(`Failed to add ${newName} to the server`, "error");
+        }
       });
   };
 
